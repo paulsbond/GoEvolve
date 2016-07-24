@@ -1,0 +1,15 @@
+body {
+  color: #333;
+  font-family: 'Ariel', sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #333;
+  padding: 3px;
+  text-align: center;
+}

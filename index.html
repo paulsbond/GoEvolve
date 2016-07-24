@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<meta charset="utf-8">
+<title>Go Evolve!</title>
+<link rel="stylesheet" href="index.css">
+<script src="angular.min.js"></script>
+<script src="index.js"></script>
+
+<body ng-controller="Controller">
+
+<h1>Pokemon Go Evolution Counter</h1>
+
+<form ng-submit="addPokemon(toAdd)">
+  <select ng-model="toAdd" ng-options="p.name for p in pokemon"></select>
+  <input type="submit" value="Add Pokemon!">
+</form>
+
+<table ng-show="selected.length > 0">
+  <tr>
+    <th>#
+    <th>Name
+    <th>Cost
+    <th>Candy
+    <th>Count
+    <th>Transfer
+    <th>Evolve
+  <tr ng-repeat="mon in selected | orderBy: 'number'">
+    <td>{{mon.number}}
+    <td>{{mon.name}}
+    <td>{{mon.cost}}
+    <td><input type="number" ng-model="mon.candy">
+    <td><input type="number" ng-model="mon.count">
+    <td>{{transfer(mon)}}
+    <td>{{evolve(mon)}}
+</table>
+
+<h2>Total: {{total()}}</h2>
