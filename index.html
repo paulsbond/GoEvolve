@@ -3,13 +3,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Go Evolve!</title>
+<meta name="author" content="Paul Bond">
+<meta name="description" content="Count the number of pokemon you can evolve in Pokémon Go">
 <link rel="stylesheet" href="index.css">
 <script src="angular.min.js"></script>
 <script src="index.js"></script>
 
 <body ng-controller="Controller">
 
-<h1>Pokemon Go Evolution Counter</h1>
+<h1 class="green">Go Evolve!</h1>
+<p>Count the number of pokemon you can evolve in Pokémon Go</p>
 
 <form ng-submit="addPokemon(toAdd)">
   <select ng-model="toAdd" ng-options="p.name for p in pokemon"></select>
@@ -18,7 +21,6 @@
 
 <table ng-show="selected.length > 0">
   <tr>
-    <th>#
     <th>Name
     <th>Cost
     <th>Candy
@@ -26,7 +28,6 @@
     <th>Transfer
     <th>Evolve
   <tr ng-repeat="mon in selected | orderBy: 'number'">
-    <td>{{mon.number}}
     <td>{{mon.name}}
     <td>{{mon.cost}}
     <td><input type="number" ng-model="mon.candy">

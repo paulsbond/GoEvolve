@@ -83,7 +83,7 @@ app.controller('Controller', ['$scope', function($scope) {
   }
 
   $scope.transfer = function(mon) {
-    if (!mon.cost || mon.count == undefined || mon.candy == undefined) return;
+    if (mon.count == undefined || mon.candy == undefined) return;
     var transfer = (mon.cost*mon.count - mon.count - mon.candy + 1) / mon.cost;
     if (transfer < 0) return 0;
     var ans = Math.ceil(transfer);
@@ -91,14 +91,14 @@ app.controller('Controller', ['$scope', function($scope) {
   };
 
   $scope.evolve = function(mon) {
-    if (!mon.cost || mon.count == undefined || mon.candy == undefined) return;
+    if (mon.count == undefined || mon.candy == undefined) return;
     return mon.count - $scope.transfer(mon);
   };
 
   $scope.total = function() {
     var total = 0;
     $scope.selected.forEach(function(mon) {
-      total += $scope.evolve(mon);
+      total += $scope.evolve(mon) || 0;
     });
     return total;
   };
