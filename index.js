@@ -1,6 +1,6 @@
 var app = angular.module('app', []);
 
-app.controller('Controller', ['$scope', function($scope) {
+app.controller('Controller', ['$scope', '$filter', function($scope, $filter) {
   $scope.pokemon = [
     {number:1, name:'Bulbasaur', cost:25},
     {number:2, name:'Ivysaur', cost:100},
@@ -74,16 +74,26 @@ app.controller('Controller', ['$scope', function($scope) {
     {number:148, name:'Dragonair', cost:100},
   ];
 
+  $scope.pokemon = $filter('orderBy')($scope.pokemon, 'name');
+
   $scope.selected = [];
   $scope.toAdd = $scope.pokemon[0];
   $scope.addPokemon = function(mon) {
-    $scope.selected.push(mon);
+    $scope.selected.unshift(mon);
     $scope.pokemon.splice($scope.pokemon.indexOf(mon), 1);
     $scope.toAdd = $scope.pokemon[0];
   }
 
+  var valid = function(mon) {
+    if (mon.count == undefined || mon.candy == undefined) return false;
+    if (mon.count < 0 || mon.candy < 0) return false;
+    if (mon.count == 0 && mon.candy == 0) return false;
+    if (mon.count % 1 !== 0 || mon.candy % 1 !== 0) return false;
+    return true;
+  }
+
   $scope.transfer = function(mon) {
-    if (mon.count == undefined || mon.candy == undefined) return;
+    if (!valid(mon)) return 0;
     var transfer = (mon.cost*mon.count - mon.count - mon.candy + 1) / mon.cost;
     if (transfer < 0) return 0;
     var ans = Math.ceil(transfer);
@@ -91,7 +101,7 @@ app.controller('Controller', ['$scope', function($scope) {
   };
 
   $scope.evolve = function(mon) {
-    if (mon.count == undefined || mon.candy == undefined) return;
+    if (!valid(mon)) return 0;
     return mon.count - $scope.transfer(mon);
   };
 

@@ -14,26 +14,36 @@
 <h1 class="green">Go Evolve!</h1>
 <p>Count the number of pokemon you can evolve in Pokémon Go</p>
 
-<form ng-submit="addPokemon(toAdd)">
+<form ng-show="pokemon.length > 0" ng-submit="addPokemon(toAdd)">
   <select ng-model="toAdd" ng-options="p.name for p in pokemon"></select>
   <input type="submit" value="Add Pokemon!">
 </form>
 
-<table ng-show="selected.length > 0">
-  <tr>
-    <th>Name
-    <th>Cost
-    <th>Candy
-    <th>Count
-    <th>Transfer
-    <th>Evolve
-  <tr ng-repeat="mon in selected | orderBy: 'number'">
-    <td>{{mon.name}}
-    <td>{{mon.cost}}
-    <td><input type="number" ng-model="mon.candy">
-    <td><input type="number" ng-model="mon.count">
-    <td>{{transfer(mon)}}
-    <td>{{evolve(mon)}}
-</table>
-
 <h2>Total: {{total()}}</h2>
+
+<div class="entry" ng-repeat="mon in selected">
+  <h3>{{mon.name}} ({{mon.cost}})</h3>
+  <div ng-class="'pkm pkm' + mon.number"></div>
+  <table>
+    <tr>
+      <th>Candy</th>
+      <td><input type="number" ng-model="mon.candy"></td>
+    <tr>
+      <th>Count</th>
+      <td><input type="number" ng-model="mon.count"></td>
+    <tr>
+      <th>Transfer</th>
+      <td>{{transfer(mon)}}</td>
+    <tr>
+      <th>Evolve</th>
+      <td>{{evolve(mon)}}</td>
+  </table>
+</div>
+
+<p>
+  This calculator is useful for seeing if you have enough pokemon to evolve
+  during your 30 minutes of lucky egg time.
+</p>
+<p>
+  We reccommend at least 50, but if you're fast you could get 70+!
+</p>
